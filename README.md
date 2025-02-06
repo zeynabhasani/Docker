@@ -27,7 +27,7 @@ Before you can run the application, you need to get the application source code 
 
 1. Clone the repository using the following command: 
 ```shell
-git clone https://github.com/zeynabhasani/Docker.git
+$ git clone https://github.com/zeynabhasani/Docker.git
 ```
 2. View the contents of the cloned repository. You should see the following files and sub-directories:
     * default.conf
@@ -46,35 +46,44 @@ In `default.conf` file, line (6,7,8), required configuration has been done:
     allow 172.17.0.1;   //*You should replace your own IP address in here if you want to have access*//
     deny all;
 ```
-
  
  In the Dockerfile,line 2, we copy this confuguration to nginx container configurations loaded in first line using `FROM nginx`.
 
 ```shell
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 ```
-
-
+**NOTE** 
+you can use following commands to interactively run commands within the container environment to check if `ngx_http_access_module` is modified or not.
+```shell
+$ Docker exec -it web /bash/sh
+`````
+```shell
+$ cd /etc/nginx/conf.d
+`````
+```shell
+$ cat default.conf
+`````
 ### Build the container's image
  
 In the terminal, make sure you're in the directory where cloned repository is located.
 Build the image using the following commands:
 
 ```shell
-$ docker build -t  nginx/MOHAYMEN-website .
+$ docker build -t  nginx/mohaymen-website .
 ```
-**NOTE:** You can use your desired repository name for this image instead of `-t nginx/MOHAYMEN-website`.
+**NOTE:** You can use your desired repository name for this image instead of `-t nginx/mohaymen-website`.
 
 
 ### Runnig the container's image
 Now you can run the image in a container using command below:
 
 ```shell
-$ docker run -it --rm -d -p 8080:80 --name web nginx/MOHAYMEN-websit
+$ docker run -it --rm -d -p 8080:80 --name web nginx/mohaymen-websit
 ```
 
-**NOTE** 
-We can use `Docker exec -it web /bash/sh` to interactively run commands in terminal within container environment.This is usefull to access nginx configuration files.
+Now open your browser and navigate to http://localhost:8080 to make sure our html page is being served correctly.
+
+**NOTE:** If you face "403 Forbidden" error, that means your IP access has not been allowed access and you need to modify /etc/nginx/conf.d/default.conf file. To find your correct IP you can use `$ docker logs web -f` and find the IP that corresponds to your logging information.That is your IP!
 
 
 ## Authors
