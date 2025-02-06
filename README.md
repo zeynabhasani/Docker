@@ -25,13 +25,16 @@ If you are using the terminal environment, set proxy for terminal using the foll
 
 Before you can run the application, you need to get the application source code onto your machine.
 
-1) Clone the repository using the following command:
-    * 
-2)View the contents of the cloned repository. You should see the following files and sub-directories:
+1. Clone the repository using the following command: 
+```shell
+git clone https://github.com/zeynabhasani/Docker.git
+```
+2. View the contents of the cloned repository. You should see the following files and sub-directories:
     * default.conf
     * Dockerfile
     * README.md
     * index.html
+
   
 ### Handling restricted IP access
 
@@ -51,6 +54,7 @@ In `default.conf` file, line (6,7,8), required configuration has been done:
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 ```
 
+
 ### Build the container's image
  
 In the terminal, make sure you're in the directory where cloned repository is located.
@@ -66,19 +70,11 @@ $ docker build -t  nginx/MOHAYMEN-website .
 Now you can run the image in a container using command below:
 
 ```shell
-$ docker run -it --rm -d -p 8080:80 --name web webserver
+$ docker run -it --rm -d -p 8080:80 --name web nginx/MOHAYMEN-websit
 ```
 
-#### Volumes
-
-* `/your/file/location` - File location
-
-#### Useful File Locations
-
-* `/some/special/script.sh` - List special scripts
-  
-* `/magic/dir` - And also directories
-
+**NOTE** 
+We can use `Docker exec -it web /bash/sh` to interactively run commands in terminal within container environment.This is usefull to access nginx configuration files.
 
 
 ## Authors
